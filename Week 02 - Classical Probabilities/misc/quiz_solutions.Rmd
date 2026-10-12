@@ -1,0 +1,19 @@
+---
+output:
+    pdf_document:
+        keep_tex: true
+        fig_caption: true
+        latex_engine: pdflatex
+title: "Solutions to Introductory Quiz in Probability"
+author: "Vassilis Markos"
+abstract: "Solutions to last time's introductory quiz with brief comments for each one."
+fontfamily: libertine
+---
+
+# Question 1
+
+> We toss a fair coin three times. The probability of HHH (three times "heads") is less than the probability of HTH ("heads", followed by "tails", followed by "head").
+
+This is a relatively simple question on classical probability. Simple counting works miracles here, since there is just one event where all tosses yield H, and there is also exactly one series of tossses resulting to HTH, so the two probabilities must be equal (given the fairness of the used coin).
+
+
