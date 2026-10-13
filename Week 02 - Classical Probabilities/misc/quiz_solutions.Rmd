@@ -116,3 +116,73 @@ So, indeed, $\mu'<\mu$.
 **-69.** It is a given fact that the mean value is sensitive to linear transformations, i.e., that the mean value of $aX+b$ equals $a\mu+b$ where $\mu$ is the mean value of $X$. Hence, in our case:
 
 $$\mu'=-3\mu=-3\cdot23=-69.$$
+
+# Question 11
+
+> Students of a Probability course score on average 13 points in a 0-20 scale, with a standard deviation of 5.84. Assuming we convert all grades to a 0-100 scale, the standard corresponding mean value, $\mu$, and standard deviation, s, will be...
+
+$\mu=65,s=29.20$. As we discussed before, the mean value is sensitive to linear transformations, while standard deviation is sensitive only to scaling, i.e., if $s$ is the standard deviation of a random variable $X$, then the standard deviaation of $aX+b$ will be:
+
+$$s'=|a|s.$$
+
+*As a piece of intuition, think of the sample as a piece of dough. In this analogy, mean value corresponds to its centre of mass and standard deviation to the distribution of the dough around its centre of mass. Thus, moving the dough around naturally moves its centre of mass (mean value) but does not affect its shape (standard deviation), while if we scale the dough, then naturally its centred of mass is appropriately scaled, e.g., when the dough puffs, while this is also true for its shape, which is naturally affected by this transformation.*
+
+# Question 12
+
+> In a sample of 183 observations, we add a new value equal to the maximum observation in the sample. Which of the following statistical functions is not guaranteed to increase?
+
+The **median** is, in general, the least vulnerable to extreme observations since it captures the point in the sample which evenly splits the sample. All other measures mentioned, given that they involve, among others, both extreme observations, are naturally affected by new extreme observations. For a demonstration, consider the following sample of 7 observations:
+
+$$1,1,2,4,4,7,8.$$
+
+Then, adding another extreme value, e.g., $2027$, will result to the range, mean value and standard deviation increasing significantly (you can verify this computationally), but the median remains intact at $\delta=4$ in both samples.
+
+# Question 13
+
+> The mean value of sample is not sensitive to extreme observations.
+
+**False**, as illustrated by the previous example (see Question 12).
+
+# Question 14
+
+> We choose two balls from a bowl containing 12 black and 8 white ones without replacement. The probability of getting two balls of the same colour is...
+
+**192/380.** To see this, let us denote by $B_i,W_i$ the events of drawing a black and white ball at iteration $i=1,2$, respectively. Then, we are interested in the probability:
+
+$$p(B_1W_2\cup W_1B_2)=p(B_1W_2)+p(W_1B_2).$$
+
+Given that there is no replacement, i.e., each ball extracted is then removed from the bowl, we easily get:
+
+$$p(B_1W_2)=\frac{12}{20}\frac{8}{19}.$$
+
+Similarly:
+
+$$p(W_1B_2)=\frac{8}{20}\frac{12}{19}.$$
+
+So, in total ($BW$ denotes the event of interest, just for simplicity):
+
+$$p(BW)=\frac{12}{20}\frac{8}{19}+\frac{8}{20}\frac{12}{19}=\frac{192}{380}.$$
+
+*You might observe some symmetry between the two cases examined above. Is this a generalisable observation or is it coincidental?*
+
+# Question 15
+
+> We choose two balls from a bowl containing 12 black and 8 white ones with replacement. The probability of getting two balls of the same colour is...
+
+**192/400.** The idea is identical to the previous question, just taking into account that now that we replace balls into the bowl, all denominators are equal to 20.
+
+# Question 16
+
+> We choose two numbers (not necessarily different}, x, y, uniformly at random from the set {1,2,...,100}. Then, their sum, x + y, is uniformly distributed on the set {2,3,...,200}.
+
+**False.** This is a classic in statistics / probability related interviews, so... heads up! Even if $x,y$ are drawn from a uniform distribution, i.e., completely at random, the distribution of their sum is not uniform. To see this, observe that, e.g., $x+y=2$ can be obtained only through $x=y=1$, while for $x+y=100$ we have the following combinations:
+
+$$(x,y)\in\{(1,99),(2,98),\ldots,(99,1)\}.$$
+
+In general, the distribution of $x+y$ is what we refer to as *triangular* distribution, since the middle values can be obtained with higher probability for combinatorial reasons.
+
+# Question 17
+
+> A flu test is positive with probability 0.95 given that the patient is actually sick, and with probability 0.20 if the patient is not actually sick. In a population where about 3% of the population is sick, what is the probability that a person tests positive?
+
+
