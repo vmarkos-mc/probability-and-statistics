@@ -6,14 +6,70 @@ output:
         latex_engine: pdflatex
 title: "Solutions to Introductory Quiz in Probability"
 author: "Vassilis Markos"
-abstract: "Solutions to last time's introductory quiz with brief comments for each one."
-fontfamily: libertine
+abstract: "Solutions to last time's introductory quiz with brief comments for each one. Also, do not miss the minor challenges in some of the most (or least) interesting questions!"
+fontfamily: bera
 ---
 
 # Question 1
 
 > We toss a fair coin three times. The probability of HHH (three times "heads") is less than the probability of HTH ("heads", followed by "tails", followed by "head").
 
-This is a relatively simple question on classical probability. Simple counting works miracles here, since there is just one event where all tosses yield H, and there is also exactly one series of tossses resulting to HTH, so the two probabilities must be equal (given the fairness of the used coin).
+**True.** This is a relatively simple question on classical probability. Simple counting works miracles here, since there is just one event where all tosses yield H, and there is also exactly one series of tossses resulting to HTH, so the two probabilities must be equal (given the fairness of the used coin).
+
+In particular, the corresponding probability is: $\frac{1}{8}$.
+
+# Question 2
+
+> We toss a fair coin three times. The probability of seeing H twice is greater than the probability of seeing H trice.
+
+**True.** Again, this boils down to simple counting. There is only one event where we have HHH (HHH itself), while there are three events where we encounter exactly two heads, namely: HHT, HTH, THH. So, since $3>1$, there are more chances to see H twice than trice.
+
+*Twist:* What if we tossed the coin 5 times? Is seeing H twice or trice the most possible outcome?
+
+# Question 3
+
+> We roll two fair dices. What is the probability of both dices bringing the same result?
+
+The correct answer is $\frac{1}{6}$ as most of you have correctly responded. The total number of combinations is $6\cdot 6=36$, while those of interest are exactly $6$ (both dices facing up the same value). So, in total, we have:
+
+$$\frac{6}{36}=\frac{1}{6}.$$
+
+# Question 4
+
+> In a multiple choice test each question has 4 possible answer, with exactly one of those being correct. A particular participant knows the correct answer in a question with probability 0.70. Then, the probability of knowing the answer having answered correctly is...
+
+The correct answer is $0.90$. The easiest way to see this is by using conditional probabilities, so, let $A$ be the event that the can answer correctly and $B$ the event that the student answers correctly. In that setting, we already know that $p(A)=0.70$ and we are interested in $p(A\mid B)$. From the Total Probability Theorem (which is no more than just partitioning the event space) we get:
+
+$$p(B)=p(B\cap A)+p(B\cap A')=p(B\mid A)p(A)+p(B\mid A')p(A').$$
+
+So, the probability of the student answering correctly in a question they do know ($B\cap A$) is $0.70$, as we already know, while the probability they answer correctly a question they do not know is $\frac{1}{4}\times 0.30=0.075$. So, in total:
+
+$$p(B)=0.70+0.075=0.775.$$
+
+Then, we have:
+
+$$p(A\mid B)=\frac{p(A\cap B)}{p(B)}=\frac{0.70}{0.775}\approx0.90.$$
 
 
+## Another line of attack...
+
+We can also answer the above by counting. The percentage of questions answered correctly will be $70\%$ plus one fourth of the other $30\%$ the student cannot answer correctly, so they answer at random. That is, the percentage of the correctly answered questions is roughly $77.5\%$, out of which the student knows the answer in $70/77.5$ questions, which is the same ratio as the one we obtained above. So, even if you were not aware of conditional probabilities and Bayes' formula, you could work things out using just... counting!
+
+
+# Question 5
+
+> We toss a fair coin 4 times. What is the probability of getting 3 times H and one time T?
+
+The correct answer is $\frac{1}{4}$. Indeed, in order to get 3 H and 1 T we have four possible combinations, depending on the position at which T appears (1st, 2nd, 3rd or 4th). So, 4 out of the $2^4=16$ possible outcomes in total, i.e.:
+
+$$\frac{4}{16}=\frac{1}{4}.$$
+
+# Question 6
+
+> We toss a "soft" coin twice. The first time, the coin behaves as a typical fair coin, while the second, if the result is H, then the probability of getting again H is 0.70, but if it is T, then the probability of getting again H is 0.40. What is the probability of getting one H and one T in those two tosses?
+
+The correct answer is $0.35$. Indeed, we have to discriminate between the two results the first toss yields. So, let $H_i,T_i$ be the events of Heads / Tails in the $i$-th toss, respectively, for $i=1,2$ and $H,T$ being the events of getting one time Heads / Tails repsectively. So, we are interested in the probability:
+
+$$p(HT)=p(H_1T_2)+p(H_2T_1).$$
+
+We can compute this in each case by taking into account the coin's softness, as follows:
