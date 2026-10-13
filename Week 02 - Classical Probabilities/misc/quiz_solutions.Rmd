@@ -1,12 +1,16 @@
 ---
-output:
-    pdf_document:
-        keep_tex: true
-        fig_caption: true
-        latex_engine: pdflatex
 title: "Solutions to Introductory Quiz in Probability"
 author: "Vassilis Markos"
-abstract: "Solutions to last time's introductory quiz with brief comments for each one. Also, do not miss the minor challenges in some of the most (or least) interesting questions!"
+output:
+  html_document:
+    df_print: paged
+  pdf_document:
+    keep_tex: true
+    fig_caption: true
+    latex_engine: pdflatex
+abstract: Solutions to last time's introductory quiz with brief comments for each
+  one. Also, do not miss the minor challenges in some of the most (or least) interesting
+  questions!
 fontfamily: bera
 ---
 

@@ -1,0 +1,67 @@
+---
+title: "Birthday Paradox"
+author: "Vassilis Markos"
+output: html_notebook
+---
+
+# A Brief Discussion of the Birthday "Paradox"
+
+The problem we discussed last time was:
+
+> In a room with $n$ people, what is the minimum number of people required so that at least two of them have birthday on the same day with probability at least $50\%$.
+
+## Probabilistic Approach
+
+We saw last time, that the formula for this is:
+
+$$p=1-\prod_{i=0}^{n-1}\frac{365-i}{365}.$$
+
+We can now verify for which value of $n$ we obtain for the first time $p>0.5$:
+
+```{r}
+# In R we prefer to assign using `<-` instead of `=`.
+p <- 0
+for (n in 2:365) { # We start with 2, since 1 person cannot have the same b-day with somebody else.
+  product <- 1 # We initialise products to 1 in order to avoid getting such at 0
+  for (i in 0:(n-1)) {
+    product <- product * (365 - i) / 365
+  }
+  p <- 1 - product
+  if (p > 0.5) {
+    # Stop once we encounter a p greater than 50%.
+    print(paste("The minimum value of n is:", n))
+    break
+  }
+}
+```
+
+## Statistical Approach
+
+Instead of making theoretical calculations with probabilities, we can try and run a statistical simulation, as follows:
+
+```{r}
+N <- 1000 # Number of trials
+for (n in 2:365) {
+  # We first create a sample of n randomly chosen bdays
+  # `sample()` picks a uniformly random sample from a certain list of values.
+  hits <- 0
+  for (i in 1:N) {
+    bdays <- sample(1:365, n, replace = TRUE)
+    # Keep only different dates.
+    unique_bdays <- unique(bdays)
+    if (length(bdays) > length(unique_bdays)) {
+      # In this case, (at least) two people share b-day.
+      hits <- hits + 1
+    }
+  }
+  p <- hits / N
+  if (p > 0.5) {
+    print(paste("The minimum value of n is:", n))
+    break
+  }
+}
+```
+
+What we see here, by running the above chunk a few times, is that we get the correct answer (maybe 24, as well) with a good chance.
+
+
