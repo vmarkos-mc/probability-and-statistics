@@ -73,3 +73,46 @@ The correct answer is $0.35$. Indeed, we have to discriminate between the two re
 $$p(HT)=p(H_1T_2)+p(H_2T_1).$$
 
 We can compute this in each case by taking into account the coin's softness, as follows:
+
+* In the case the first toss is H, which happens with probability $p(H_1)=0.50$, we then get T with probaiblity $p(T_2)=0.30$, so we get $p(H_1T_2)=0.50\cdot 0.30=0.15$.
+* Similarly, in case the first toss is T, with probability $p(T_1)=0.50$, then we get $H$ with probability $p(H_2)=0.40$, so $p(T_1H_2)=0.50\cdot0.40=0.20$.
+
+In total, we obtain $p(HT)=0.15+0.20=0.35$ as promised.
+
+# Question 7
+
+> The intersection of two sets A, B, corresponds to the set of all elements belonging to both A and B.
+
+**True**, by the very definition of the intersection, $A\cap B$ of two sets.
+
+# Question 8
+
+> The union of two sets A, B, corresponds to the set of all elements belonging either to A or B but not both.
+
+**True**, again by the definition of $A\cup B$. Observe that in set theory, the union always includes the intersection of the same two sets, i.e.:
+
+$$A\cap B\subseteq A\cup B$$
+
+which might contradict the common everyday use of "or" as "either... or...". Bear this in mind as you formulate problems from natural language to mathematics.
+
+# Question 9
+
+> The average height of a football team is 1.76. Selling a player of height 1.83 and buying a player of height 1.81 will...
+
+**lower the team's average height.** This is expected, since we remove a larger observation from our sample than the one we introduce. In particular, taking some time to do the math, let $S$ denote the sum of heights of the $n$ players of the team. Then, the new total height will be given by:
+
+$$S'=S-1.83+1.82=S-0.02,$$
+
+so the new average value will be:
+
+$$\mu'=\frac{S'}{n}=\frac{S-0.02}{n}=\frac{S}{n}-\frac{0.02}{n}<\frac{S}{n}=\mu.$$
+
+So, indeed, $\mu'<\mu$.
+
+# Question 10
+
+> Let X be a sample of 37 observations with mean value 23. Multiplying all sample observations by -3, the new average will be...
+
+**-69.** It is a given fact that the mean value is sensitive to linear transformations, i.e., that the mean value of $aX+b$ equals $a\mu+b$ where $\mu$ is the mean value of $X$. Hence, in our case:
+
+$$\mu'=-3\mu=-3\cdot23=-69.$$
