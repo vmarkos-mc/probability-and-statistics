@@ -1,0 +1,80 @@
+---
+title: "In Class Notes"
+author: "V. Markos"
+date: "2026-10-20"
+output: html_document
+---
+
+# Last Time Recap
+
+## Conditional Probability
+
+> **Conditional Probability.** Given two events $A$ and $B$ the probability of $A$
+happening given that $B$ has happened is denoted by $p(A\mid B)$ and computed by:
+$$p(A\mid B)=\frac{p(A\cap B)}{p(B)}.$$
+
+Also, we discussed the following:
+
+> **Total Probability Theorem.** Given an event $A$ and a partition of the sample space
+$\Omega$ into pairwise disjoint events $B_1,B_2,\ldots,B_n$, then it holds that:
+$$P(A)=\sum_{k=1}^nP(A\cap B_k).$$
+
+So, given the above, we can also write:
+
+$$P(A\cap B)=P(A\mid B)P(B),$$
+
+given the definition of *conditional probability*. So, the total probability 
+theorem can also be stated as:
+
+$$P(A)=\sum_{k=1}^nP(A\mid B_k)P(B_k).$$
+So, we can also distinguish whether two events are independent or not. Recall
+that two events are independent exactly when:
+
+$$P(A\cap B)=P(A)P(B).$$
+So, using conditional probabilities:
+
+$$P(A\mid B)P(B)=P(A)P(B).$$
+So, in case $P(B)>0$ we also get:
+
+$$P(A\mid B)=P(A),$$
+i.e., knowing what is the outcome of $B$ does not affect the probability of $A$.
+
+## Bayes Theorem
+
+> **Bayes Theorem.** Given two events $A,B$ in a sample space, we have:
+$$P(A\mid B)=\frac{P(B\mid A)P(A)}{P(B\mid A)P(A)+P(B\mid A')P(A')}$$
+
+Evidently, the above theorem boils down to applying the definition of conditional
+probability on the enumerator and the Total Probability Theorem on the denominator.
+Also, the same holds for more than two events.
+
+A popular scene from the 2008 [21 movie](https://en.wikipedia.org/wiki/21_(2008_film))
+describes the following problem:
+
+> You have three closed doors in front of you $A,B,C$, two of which contain a goat and 
+one of which contains a super-car. You are asked first to pick one of the three doors.
+After you make your choice, and one of the two goat-doors has been opened,
+you are suddenly given the chance to change your choice. What do you do?
+
+Before we make any decisions and computations, lets write an R script to simulate
+this:
+
+```{r}
+# First, simulate without changing door.
+N <- 1000
+hits <- 0
+for (i in 1:N) {
+  # Randomly select which door contains the car.
+  car_door <- sample(1:3, 1)
+  # Randomly pick one of the three doors.
+  player_choice <- sample(1:3, 1)
+  if (player_choice == car_door) {
+    hits <- hits + 1
+  }
+}
+prob_no_change <- hits / N
+print(paste("Win probability with no door change: ", prob_no_change))
+
+# Then, simulate the change of door.
+hits <- 0
+```
