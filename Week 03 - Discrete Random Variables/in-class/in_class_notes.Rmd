@@ -77,4 +77,82 @@ print(paste("Win probability with no door change: ", prob_no_change))
 
 # Then, simulate the change of door.
 hits <- 0
+no_change_hits <- 0
+for (i in 1:N) {
+  car_door <- sample(1:3, 1)
+  player_choice <- sample(1:3, 1) # This is not actually needed in this case.
+  if (player_choice == car_door) {
+    no_change_hits <- no_change_hits + 1
+  }
+  # We open a door that is neither containing the car nor the one chosen by the player
+  opened_door <- sample(setdiff(1:3, c(car_door, player_choice)), 1)
+  new_player_choice <- setdiff(1:3, c(player_choice, opened_door))[1]
+  if (new_player_choice == car_door) {
+    hits <- hits + 1
+  }
+}
+prob_change <- hits / N
+prob_no_change <- no_change_hits / N
+print(paste("Win probability with no door change: ", prob_no_change))
+print(paste("Win probability with door change   : ", prob_change))
 ```
+We can also prove that changing doors is more efficient by using conditional probabilities.
+
+To begin with, let us assume that the car lies behind door $A$ and let $A,B,C$ the events 
+of choosing doors $A,B,C$ respectively. Evidently:
+
+$$P(A)=P(B)=P(C)=\frac{1}{3}.$$
+Now, let us assume that one of the goat-doors is opened, e.g., $C$, so now we have the following probability:
+
+$$P(A\mid C=goat)=\frac{P(A\cap (C=goat))}{P(C=goat)}=\frac{\frac{1}{3}}{\frac{2}{3}}=\frac{1}{2}.$$
+
+# Random Variables
+
+Let us consider a fair coin which we toss $n=10$ times, further assuming that each toss
+is independent of each other. What is the probability of seeing exactly $k=6$ heads
+out of the 10 tosses?
+
+We can think of this as follows:
+
+* 6 out of 10 should be heads, which happens with probability:
+$$\frac{1}{2}\frac{1}{2}\frac{1}{2}\frac{1}{2}\frac{1}{2}\frac{1}{2}=\left(\frac{1}{2}\right)^6=\frac{1}{2^6}.$$
+* Similarly, the case of 4 tails happens with probability:
+$$\left(\frac{1}{2}\right)^4=\frac{1}{2^4}.$$
+* Now, it remains to compute the number of times that correspond to 6 heads (and 4 tails). This is done by the number:
+$$\binom{10}{6}=\frac{10!}{6!(10-6)!}=\frac{10!}{6!4!}=\frac{10\cdot9\cdot8\cdot 7}{4!}=210.$$
+
+So, in total, the probability to get 6 heads is:
+
+$$P(k=6)=\binom{10}{6}\left(\frac{1}{2}\right)^6\left(\frac{1}{2}\right)^4=\frac{210}{64\cdot16}=\frac{210}{1024}\approx0.2051$$
+In general, **let $X$ the number of heads in the above 10 tosses.** Then:
+
+$$P(X=k)=\binom{10}{k}\left(\frac{1}{2}\right)^k\left(\frac{1}{2}\right)^{10-k},$$
+for $k=0,1,\ldots,10$.
+
+The above is an example of a **random variable**, i.e., $X$ counts the number of 
+a quantity that happens randomly. Also, the set of values $k\in\{0,1,\ldots,10\}$
+for which $X$ "makes sense" (i.e., $P(X=k)$ is not zero) is called the *support* of $X$.
+Also, we can define a function $f_X:\mathbb{R}\to[0,1]$ which corresponds exactly to this 
+probability:
+
+$$f_X(x)=P(X=x)=\begin{cases}\binom{10}{x}\left(\frac{1}{2}\right)^x\left(\frac{1}{2}\right)^{10-x}& x=0,1,\ldots,10\\0 & \text{otherwise}\end{cases}$$
+
+This function is called **probability mass function** (pmf) for the random variable $X$.
+
+We can also define the following function:
+
+$$F_X(x)=P(X\leq x)=\sum_{k\leq x}f_X(k)$$
+which is called **cumulative distribution function** (cdf) of $X$.
+
+Some important properties for the pmf:
+
+* $0\leq f_X(x)\leq 1$
+* $f_X(x)=0$ for $x$ not in the support of $X$.
+* $\sum_x f_X(x)=1$ since we add on all possible outcomes.
+
+Similarly, for the cdf:
+
+* $F_x$ is increasing with respect to $x$, since we add non-negative probabilities.
+* $\lim\limits_{x\to-\infty}F_X(x)=0$
+* $\lim\limits_{x\to+\infty}F_X(x)=1$
+* $\lim\limits_{x\to x_0+}F_X(x)=F_X(x_0)$
