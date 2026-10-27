@@ -1,0 +1,219 @@
+---
+title: "In Class Notes"
+author: "V. Markos"
+date: "2026-10-27"
+output:
+  pdf_document: default
+  html_document: default
+fontfamily: bera
+---
+
+# Last Time Recap
+
+Last we briefly discussed, among others, key concepts around Random Variables, including:
+
+* Probability Mass Function, i.e., the function $f_X(x)=P(X=x)$.
+* Cumulative Distribution Function, i.e., the functions $F_X(x)=P(X\leq x)$.
+
+We also discussed some key properties of the above:
+
+* $0\leq f_X(x)\leq 1$
+* $f_X(x)=0$ for $x$ not in the support of $X$.
+* $\sum_x f_X(x)=1$ since we add on all possible outcomes.
+
+Similarly, for the cdf:
+
+* $F_x$ is increasing with respect to $x$, since we add non-negative probabilities.
+* $\lim\limits_{x\to-\infty}F_X(x)=0$
+* $\lim\limits_{x\to+\infty}F_X(x)=1$
+* $\lim\limits_{x\to x_0^+}F_X(x)=F_X(x_0)$
+
+# Discrete Random Variables
+
+Usually, a discrete random variable counts the count / number of something.
+We shall first provide an overview of the most well-known discrete random variables.
+
+## Well Known Discrete Random Variables
+
+### Bernoulli Random Variables
+
+Consider a coin and let $X$ be the number of H in a *single* toss of this coin.
+Evidently, $X\in\{0,1\}$, i.e., the support of $X$ is $\{0,1\}$. So, in this 
+case, $X=0$ means T (no H), while $X=1$ means H. Also, let $p\in[0,1]$ is the 
+probability that the coin yields H. So, we have:
+
+$$X=\begin{cases}1 & \text{with probability }p\\ 0 & \text{with probability }1-p\end{cases}$$
+This is the so called *Bernoulli* random variable. Typically, a Bernoulli random variable 
+is not that interesting itself but, as we shall see, it is the basis for many more complex and interesting random variables. In this case, the PMF reads:
+
+$$f_X(x)=P(X=x)=\begin{cases}p & x=1\\1-p & x=0\end{cases}.$$
+
+### Binomial Random Variable
+
+Assume we have a coin that yields H with probability $p\in[0,1]$. Let us now toss this 
+coin $n$ times independently, for some $n=1,2,\ldots$ Let also $X$, in this case, be the number of tosses
+that yield H. This is the so-called *Binomial* random variable, and its PMF is:
+
+$$f_X(x)=P(X=x)=P(x\text{ tosses yield H}).$$
+To compute the probability that $x$ out of $n$ tosses yield H, we think as follows:
+
+* In order to get $x$ times H, we have a probability of $p^x$.
+* The rest tosses should yield T, which happens with probability $(1-p)^{n-x}$.
+* So, each combination of $x$ H and $n-x$ T occurs with probability: $p^x(1-p)^{n-x}$.
+* It now remains to compute the ways in which $x$ out $n$ tosses can be H. This corresponds
+to choosing $x$ out of $n$ tosses to be H, i.e.:
+$$\binom{n}{x}.$$
+
+So, in total, we have:
+
+$$f_X(x)=P(X=x)=\binom{n}{x}p^x(1-p)^{n-x}.$$
+Using probabilities, we often get algebraic identities for free. For example:
+
+> Observe that, since we know that $\sum f_X(x)=1$, i.e., the total probability is 
+> preserved. This means that for any $p\in[0,1]$, we must have:
+> $$\sum_{x=0}^n\binom{n}{x}p^x(1-p)^{n-x}=1.$$
+
+
+Let us now consider an example. Consider a lithography factory that creates some microchips in which there is a particular machine that creates a chip of type A. This machine produces a faulty chip with probability $p=1\%$. What is then, the probability that in a sample of $10,000$ chips, we get at most one faulty chip?
+
+Let $X$ be the number of faulty chips in a sample of $n=10,000$ chips. Then, $X$ follows
+a Binomial distribution with parameters $n=10,000$ and $p=0.01$, i.e., the probability 
+that a chip is faulty. So, we are interested into:
+
+$$P(X\leq 1)=P(X=0)+P(X=1).$$
+Given then PMF of $X$, we have:
+
+$$\begin{aligned}
+  f_X(0)&=P(X=0)=\binom{10,000}{0}0.01^00.99^{10,000}=0.99^{10,000}.\\
+  f_X(1)&=P(X=1)=\binom{10,000}{1}0.01^10.99^{9,999}=10,000\cdot0.01\cdot0.99^{9,999}=100\cdot0,99^{9,999}.
+\end{aligned}$$
+
+So, the requested probability is:
+
+$$P(X\leq 1)=0.99^{10,000}+100\cdot0,99^{9,999}$$
+Using R:
+
+```{r}
+p <- 0.99^{10000} + 100*0.99^{9999}
+print(p)
+```
+### Geometric Random Variable
+
+Consider the following experiment:
+
+> Let $p$ be the probability that a coind yields H. What is the probability that after tossing the coin many times independently the first time that it yields H is after $n$ tosses?
+
+Let $X$ be the number of consecutive Ts until the first time we get H. Then, the support
+of $X$ is $\{0,1,2,\ldots\}$. So, we are interested into the probability:
+
+$$f_X(x)=P(X=x)=P(x\text{ times T before the first H}).$$
+
+For example, we are interested in cases like: TTTH, TH, H, TTTTTTTTH and, in general:
+
+$$\underbrace{T\ldots T}_xH.$$
+Since all tosses are independent, the probability for the above to happen is:
+
+$$f_X(x)=P(X=x)=(1-p)^xp,\quad x=0,1,\ldots$$
+Observe again, that this also yields a known analytic series for free:
+
+$$\sum_{x=0}^\infty f_X(x)=1\Leftrightarrow\sum_{x=0}^\infty (1-p)^xp=1,$$
+that is, dividing both sides by $p$:
+
+$$\sum_{x=0}^\infty(1-p)^x=\frac{1}{p}.$$
+As an example, let us consider a lottery where we pick among 20,000 different candidates.
+Further assume that each candidate participates always with the same number. So, 
+what is the probability that the candidate with number 12,567 will win the lottery
+after at least 10 failures.
+
+Let $p=1/20,000$ be the probability that one wins the lottery, and also let $X$ be the number of failures until one's first win. We are interested in the value:
+
+$$P(X\geq 10).$$
+There are two ways to compute this. One is to compute the infinite sum:
+
+$$P(X\geq 10)=\sum_{x=10}^\infty P(X=x).$$
+The other way is to use the number one trick we saw with the b-day paradox:
+
+$$P(X\geq 10)=1-P(X<10)=1-\sum_{x=0}^9P(X=x).$$
+While both are relatively easy, the latter requires less advanced maths. Substituting 
+the formula for $f_X(x)$ we have:
+
+$$P(X\leq 10)=1-\sum_{x=0}^9\left(1-\frac{1}{20000}\right)^x\frac{1}{20000}=1-\frac{1}{20000}\sum_{x=0}^9\left(\frac{19999}{20000}\right)^x$$
+Here we can either use the known geometric sum formula:
+
+$$\sum_{k=0}^n\lambda^k=\frac{1-\lambda^{n+1}}{1-\lambda}.$$
+But, we also have R:
+
+```{r}
+q <- 19999/20000
+p <- 1 - q
+r <- 1 - p * sum(q^(0:9))
+print(r)
+```
+This is expected as the chances to win the lottery are really low, so, if one is to win,
+this should be expected to take at least 10 iterations.
+
+### Negative Binomial Random Variable
+
+Imagine that we toss a coin (independently) that yields H with probability $p$ until we reach $r>0$ Hs. We are now interested in the number of T until this happens. So, let $X$ is this number. What is then, the probability:
+
+$$f_X(x)=P(X=x),\quad x=0,1,2,\ldots$$
+With a rationale similar to that of the Binomial Distribution:
+
+* We get $r$ Hs with probability $p^r$.
+* We get $x$ Ts with probability $(1-p)^x$.
+* We need in total $r+x$ tosses, of which $r$ should be H (and $x$ should be T).
+
+So, in a similar fashion:
+
+$$P(X=x)=\binom{r+x}{r}p^r(1-p)^x.$$
+But, if we visit, e.g., the Negative Binomial Wikipedia [page](https://en.wikipedia.org/wiki/Negative_binomial_distribution) we see that the correct formula should be:
+
+$$P(X=x)=\binom{r+x-1}{x}p^r(1-p)^x.$$
+There are two errors, both in the binomial coefficient. To begin with, the last toss
+will always be H, so we do not have $r+x$ but $r+x-1$ choices (for the first $r+x-1$ tosses). So, we should have written:
+
+$$\binom{r+x-1}{r-1}$$
+since we can choose the position of the first $r-1$ Hs. Then, since, in general:
+
+$$\binom{n}{k}=\binom{n}{n-k},$$
+this also reads:
+
+$$\binom{r+x-1}{r-1}=\binom{r+x-1}{x}.$$
+This is intuitively sound, since, e.g., to pick $k=7$ out of $n=10$ balls (without replacement), it is the same as to pick the $n-k=3$ balls that will *not* be picked.
+
+
+So, to conclude:
+
+$$f_X(x)=P(X=x)=\binom{r+x-1}{x}p^r(1-p)^{x}.$$
+
+### Poisson Random Variable
+
+Consider the case of a typographer that makes, on average, 2 typos per (typed) page. In this case, the number $X$, of typos per page follows the so-called *Poisson* distributions, with PMF reading:
+
+$$f_X(x)=P(X=x)=e^{-\lambda}\frac{\lambda^x}{x!},$$
+where $\lambda$ is a parameter of the distribution, corresponding to the average value. In our case:
+
+$$f_X(x)=e^{-2}\frac{2^x}{x!},\quad x=0,1,\ldots$$
+In the above, $e$ is Euler's constant, i.e. $e\approx 2.71828\ldots$
+
+Also, assuming that the above formula holds, we can derive a know Taylor expansion:
+
+$$\sum_{x=0}^\infty f_X(x)=1\Leftrightarrow\sum_{x=0}^\infty e^{-\lambda}\frac{\lambda^x}{x!}=1.$$
+Hence, multiplying both side by $e^\lambda$, we get;
+
+$$\sum_{x=0}^\infty\frac{\lambda^x}{x!}=e^{\lambda}.$$
+
+
+### Okay, But How to Distinguish Between Distributions?
+
+Below we present some example cases for each distribution:
+
+* Binary things, i.e., success / failure, are typically a Bernoulli.
+* The count of successes in a finite series of trials is typically a Binomial.
+* The count of failures up to the first success is typically a Geometric.
+* The count of failures up to the first $r$ successes is typically a Negative Binomial.
+* Also, Poisson typically corresponds to these cases where we have some sort of "additivity" or the so-called "memory-less" property.
+
+
+
+
