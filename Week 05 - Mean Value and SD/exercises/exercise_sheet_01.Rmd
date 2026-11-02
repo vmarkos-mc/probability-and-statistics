@@ -1,0 +1,96 @@
+---
+title: "Exercise Sheet 01 - Discrete Random Variables"
+author: "Vassilis Markos"
+date: "2026-11-02"
+output:
+  pdf_document: default
+  html_document: default
+fontfamily: bera
+classoption: twocolumn
+---
+
+## Problem 1
+
+Two balls are chosen randomly from an urn containing 8 white, 4 black, and 2 orange balls. Suppose that we win \$2 for each black ball selected and we lose \$1 for each white ball selected. Let $X$ denote our winnings. What are the possible values of $X$, and what are the probabilities associated with each value?
+
+
+## Problem 2
+
+Two fair dice are rolled. Let $X$ equal the product of the 2 dice. Compute $P\{X = i\}$ for $i = 1, \dots, 36$.
+
+
+## Problem 3
+
+Three dice are rolled. By assuming that each of the $6^3 = 216$ possible outcomes is equally likely, find the probabilities attached to the possible values that $X$ can take on, where $X$ is the sum of the 3 dice.
+
+
+## Problem 4
+
+Suppose that a die is rolled twice. What are the possible values that the following random variables can take on:
+
+(a) the maximum value to appear in the two rolls;
+(b) the minimum value to appear in the two rolls;
+(c) the sum of the two rolls;
+(d) the value of the first roll minus the value of the second roll?
+
+
+## Problem 5
+
+A salesman has scheduled two appointments to sell encyclopedias. His first appointment will lead to a sale with probability .3, and his second will lead independently to a sale with probability .6. Any sale made is equally likely to be either for the deluxe model, which costs \$1000, or the standard model, which costs \$500. Determine the probability mass function of $X$, the total dollar value of all sales.
+
+
+## Problem 6
+
+Five distinct numbers are randomly distributed to players numbered 1 through 5. Whenever two players compare their numbers, the one with the higher one is declared the winner. Initially, players 1 and 2 compare their numbers; the winner then compares her number with that of player 3, and so on. Let $X$ denote the number of times player 1 is a winner. Find $P\{X = i\}, i = 0, 1, 2, 3, 4.$
+
+
+## Problem 7
+
+In the game of Two-Finger Morra, 2 players show 1 or 2 fingers and simultaneously guess the number of fingers their opponent will show. If only one of the players guesses correctly, they win an amount (in dollars) equal to the sum of the fingers shown by them and their opponent. If both players guess correctly or if neither guesses correctly, then no money is exchanged. Consider a specified player, and denote by $X$ the amount of money they win in a single game of Two-Finger Morra.
+
+(a) If each player acts independently of the other, and if each player makes their choice of the number of fingers they will hold up and the number they will guess that their opponent will hold up in such a way that each of the 4 possibilities is equally likely, what are the possible values of $X$ and what are their associated probabilities?
+(b) Suppose that each player acts independently of the other. If each player decides to hold up the same number of fingers that they guess their opponent will hold up, and if each player is equally likely to hold up 1 or 2 fingers, what are the possible values of $X$ and their associated probabilities?
+
+
+## Problem 8
+
+When coin 1 is flipped, it lands on heads with probability .4; when coin 2 is flipped, it lands on heads with probability .7. One of these coins is randomly chosen and flipped 10 times.
+
+(a) What is the probability that the coin lands on heads on exactly 7 of the 10 flips?
+(b) Given that the first of these ten flips lands heads, what is the conditional probability that exactly 7 of the 10 flips land on heads?
+
+
+## Problem 9
+
+Suppose that a biased coin that lands on heads with probability $p$ is flipped 10 times. Given that a total of 6 heads results, find the conditional probability that the first 3 outcomes are
+
+(a) $h, t, t$ (meaning that the first flip results in heads, the second in tails, and the third in tails);
+(b) $t, h, t$.
+
+
+## Problem 10
+
+The expected number of typographical errors on a page of a certain magazine is .2. What is the probability that the next page you read contains (a) 0 and (b) 2 or more typographical errors? Explain your reasoning!
+
+
+## Problem 11
+
+The monthly worldwide average number of airplane crashes of commercial airlines is 3.5. What is the probability that there will be
+
+(a) at least 2 such accidents in the next month;
+(b) at most 1 accident in the next month?
+
+Explain your reasoning!
+
+
+## Problem 12
+
+Consider a roulette wheel consisting of 38 numbers 1 through 36, 0, and double 0. If Smith always bets that the outcome will be one of the numbers 1 through 12, what is the probability that
+
+(a) Smith will lose their first 5 bets;
+(b) their first win will occur on their fourth bet?
+
+
+## Problem 13
+
+Two athletic teams play a series of games; the first team to win 4 games is declared the overall winner. Suppose that one of the teams is stronger than the other and wins each game with probability .6, independently of the outcomes of the other games. Find the probability, for $i = 4, 5, 6, 7$, that the stronger team wins the series in exactly $i$ games. Compare the probability that the stronger team wins with the probability that it would win a 2-out-of-3 series.
