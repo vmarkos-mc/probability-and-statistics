@@ -1,0 +1,42 @@
+---
+title: "Common R Functions"
+author: "V. Markos"
+date: "2026-11-03"
+output: html_document
+---
+
+# Descriptive Statistics
+
+Consider a sample as a working example:
+
+```{r}
+numbers <- sample(1:10, 100, replace = TRUE)
+print(numbers)
+```
+
+To compute the sample's mean:
+
+```{r}
+mean(numbers)
+```
+
+Similarly, for median:
+
+```{r}
+median(numbers)
+```
+
+For the sample's standard deviation:
+
+```{r}
+sd(numbers)
+```
+
+# Plotting Functions
+
+Assume you are interested in a simple barplot:
+
+```{r}
+numbers_table <- table(numbers)
+barplot(numbers_table)
+```

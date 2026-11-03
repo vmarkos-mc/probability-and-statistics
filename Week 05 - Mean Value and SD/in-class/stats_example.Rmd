@@ -1,0 +1,52 @@
+---
+title: "Stats Example"
+output: html_document
+---
+
+# Example Statistical Manipulations
+
+Consider the following data, indicating nothing meaningful:
+
+```{r}
+# 20 randomly picked numbers within the [0,12] integer interval
+dataset <- sample(0:12, 20, replace = TRUE)
+```
+
+Now, we can print a summary of all statistics:
+
+```{r}
+summary(dataset)
+```
+
+Now, let us assume that we are interested in a table of frequencies for the above:
+
+```{r}
+table(dataset)
+```
+
+Let us also plot a simple barplot:
+
+```{r}
+barplot(table(dataset))
+```
+
+Also, we can get the relative frequencies relatively easily:
+
+```{r}
+pmf <- table(dataset) / 20
+print(pmf)
+```
+Observe, that this also corresponds to the Probability Mass Function (PMF).
+
+We might also be interested into the Cummulative Distribution Function (CDF):
+
+```{r}
+cdf <- function(n) {
+  s <- 0
+  for (i in 1:n) {
+    if (pmf[i] < n) {
+      s <- s + pmf[i]
+    }
+  }
+}
+```
