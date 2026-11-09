@@ -1,0 +1,131 @@
+---
+title: "Exercise Sheet 02 - Discrete Random Variables"
+author: "Vassilis Markos"
+date: "2026-11-10"
+output:
+  pdf_document: default
+  html_document: default
+fontfamily: bera
+---
+
+## Quick Reference for Well-Known Distributions
+
+When working with common families of discrete random variables, we use specific formulas derived from their parameters rather than calculating them step-by-step from the definition, as we have seen in class.
+
+| Distribution | Parameters | $P(X = x)$ | $E[X]$ | $Var(X)$ | $SD(X)$ |
+|:----|:-------|:--------------|:---|:---|:---|
+| **Bernoulli** | $p$ (prob. of success) | $p^x (1-p)^{1-x}$, for $x \in \{0, 1\}$ | $p$ | $p(1-p)$ | $\sqrt{p(1-p)}$ |
+| **Binomial** | $n$ (trials), $p$ (prob. of success) | $\binom{n}{x} p^x (1-p)^{n-x}$, for $x \in \{0, 1, \dots, n\}$ | $np$ | $np(1-p)$ | $\sqrt{np(1-p)}$ |
+| **Poisson** | $\lambda$ (average rate) | $\frac{\lambda^x e^{-\lambda}}{x!}$, for $x \in \{0, 1, 2, \dots\}$ | $\lambda$ | $\lambda$ | $\sqrt{\lambda}$ |
+| **Geometric** | $p$ (prob. of success) | $(1-p)^{x-1}p$, for $x \in \{1, 2, 3, \dots\}$ *(1st success on trial $x$)* | $\frac{1}{p}$ | $\frac{1-p}{p^2}$ | $\frac{\sqrt{1-p}}{p}$ |
+| **Negative Binomial** | $r$ (target successes), $p$ | $\binom{x-1}{r-1} p^r (1-p)^{x-r}$, for $x \in \{r, r+1, \dots\}$ *(r-th success on trial $x$)* | $\frac{r}{p}$ | $\frac{r(1-p)}{p^2}$ | $\frac{\sqrt{r(1-p)}}{p}$ |
+
+*Note: The Geometric and Negative Binomial formulas above are written for the standard definition counting the total number of **trials** ($x$). If counting only the number of **failures** before the success, the formulas shift slightly.*
+
+
+## Exercises
+
+### Exercise 1
+
+A discrete random variable $X$ has the following probability distribution:
+
+| $x$ | $P(X = x)$ |
+|:---:|:----------:|
+|  1  |    0.1     |
+|  2  |    0.3     |
+|  3  |    0.4     |
+|  4  |    0.2     |
+
+**Questions:**
+
+a) Verify that this is a valid probability distribution.
+b) Calculate the expected value (mean) of $X$, denoted as $E[X]$.
+c) Calculate the variance, $Var(X)$, using the computational formula: $Var(X) = E[X^2] - (E[X])^2$.
+d) Find the standard deviation, $SD(X)$.
+
+
+### Exercise 2
+
+In a children's board game, players spin a pointer on a wheel. The wheel determines how many spaces a player moves forward or backward. Let $Y$ be the number of spaces moved.
+
+*   $Y = -1$ (Move backward 1 space) with probability $0.20$
+*   $Y = 0$ (Stay put) with probability $0.15$
+*   $Y = 2$ (Move forward 2 spaces) with probability $0.45$
+*   $Y = 5$ (Move forward 5 spaces) with probability $0.20$
+
+**Questions:**
+
+a) Construct a formal probability distribution table for $Y$.
+b) What is the average (expected) number of spaces a player moves per spin?
+c) Calculate the variance and standard deviation of $Y$ to measure the variability of the spins.
+
+
+### Exercise 3
+
+A small tech support center tracks the number of urgent tickets, $Z$, they receive in the first hour of a shift. The distribution is partially given below:
+
+| $z$ | $P(Z = z)$ |
+|:---:|:----------:|
+|  0  |    0.40    |
+|  1  |    0.35    |
+|  2  |     k      |
+|  3  |    0.05    |
+
+**Questions:**
+
+a) Find the missing value $k$ that makes this a legitimate probability distribution.
+b) Find the mean number of urgent tickets received during this hour.
+c) Find the standard deviation of the tickets.
+
+
+### Exercise 4
+
+For each of the following scenarios, identify the appropriate probability distribution from Part 1 (Bernoulli, Binomial, Poisson, Geometric, or Negative Binomial) and use the formulas from the table to state the **mean** and **standard deviation**.
+
+1.  A basketball player has an 80% free-throw success rate. Let $A$ be the number of free throws made out of a total of 15 independent attempts.
+2.  A router receives an average of 4.5 web traffic requests per millisecond. Let $B$ be the total number of requests received in a randomly selected millisecond.
+3.  A quality assurance inspector tests computer chips one by one until they find their very first defective chip. The probability of any chip being defective is 0.02. Let $C$ be the total number of chips tested.
+
+
+## Problems
+
+### Problem 1
+
+An independent contractor reviews insurance claims. The number of claims they process in a single day, $X$, is a random variable with mean $E[X] = 6.5$ and variance $Var(X) = 2.25$. 
+
+The contractor is paid a fixed daily base rate of \$150 plus an additional \$40 per claim processed. Let $W$ represent the contractor's total daily earnings ($W = 40X + 150$).
+
+**Questions:**
+
+a) Calculate the contractor's expected daily earnings, $E[W]$.
+b) Calculate the variance of their daily earnings, $Var(W)$.
+c) Find the standard deviation of their daily earnings, $SD(W)$.
+*Hint: Recall how constants affect mean and variance: $E[aX + b] = aE[X] + b$ and $Var(aX + b) = a^2Var(X)$.*
+
+
+### Problem 2
+
+Two distinct software scripts run independently on a server. Let $X$ be the number of errors script A encounters per hour, and let $Y$ be the number of errors script B encounters per hour. The joint probability distribution $P(X = x, Y = y)$ is given below:
+
+| | $Y = 0$ | $Y = 1$ | $Y = 2$ |
+|---|---|---|---|
+| **$X = 0$** | 0.12 | 0.18 | 0.10 |
+| **$X = 1$** | 0.18 | 0.27 | 0.15 |
+
+**Questions:**
+
+a) Find the marginal probability distributions for both $X$ and $Y$.
+b) Are $X$ and $Y$ independent random variables? Prove your answer mathematically.
+c) Calculate $E[X]$, $E[Y]$, and the expected value of their product, $E[XY]$.
+
+
+### Problem 3
+
+Use the formulas from the reference table in Part 1 to solve the following applied problems:
+
+1.  A customer support line receives an average of $\lambda = 12$ calls per hour. 
+    a) What is the expected number of calls received over a 3-hour period?
+    b) What is the standard deviation of the number of calls received over that same 3-hour period?
+2.  A factory production line creates mechanical parts, where each part has a $5\%$ chance ($p = 0.05$) of being defective. The supervisor runs the assembly line until they accumulate exactly $r = 3$ defective parts for quality testing.
+    a) What is the expected total number of parts the line must produce before stopping?
+    b) Calculate the standard deviation of the total number of parts produced.
