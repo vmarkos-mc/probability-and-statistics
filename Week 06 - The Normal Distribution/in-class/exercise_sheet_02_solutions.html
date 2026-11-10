@@ -710,6 +710,31 @@ affect mean and variance: <span class="math inline">\(E[aX + b] = aE[X]
 + b\)</span> and <span class="math inline">\(Var(aX + b) =
 a^2Var(X)\)</span>.</em></li>
 </ol>
+<div id="solution-4" class="section level4">
+<h4>Solution</h4>
+<p>We can compute the mean value directly using the definition:</p>
+<p><span class="math display">\[\begin{aligned}
+  E[W]&amp;=\sum_{w}wP(W=w)=\sum_{x=0}^\infty(40x+150)P(X=x)=\\
+  &amp;=\sum_{x=0}^\infty 40xP(X=x)+\sum_{x=0}^\infty150P(X=x)=\\
+  &amp;=40\sum_{x=0}^\infty xP(X=x)+150\sum_{x=0}^\infty P(X=x)=\\
+  &amp;=40E[X]+150\cdot 1=\\
+  &amp;=40\cdot6.5+150=\\
+  &amp;=410
+\end{aligned}\]</span></p>
+<p>Or, we can just use the linearity of mean values:</p>
+<p><span class="math display">\[E[aX+b]=aE[X]+b.\]</span> So, in our
+case:</p>
+<p><span class="math display">\[E[W]=E[40X+150]=40E[X]+150=410.\]</span>
+Similarly, for the variance, we know that:</p>
+<p><span class="math display">\[\begin{aligned}
+  Var(aX)&amp;=a^2Var(X)\\
+  Var(X+b)&amp;=Var(X)
+\end{aligned}\]</span></p>
+<p>So, in our case:</p>
+<p><span class="math display">\[Var(W)=Var(40X+150)=40^2Var(X)=3600.\]</span> For
+the standard deviation:</p>
+<p><span class="math display">\[SD(W)=\sqrt{Var(W)}=\sqrt{3600}=60.\]</span></p>
+</div>
 </div>
 <div id="problem-2" class="section level3">
 <h3>Problem 2</h3>
@@ -751,6 +776,129 @@ your answer mathematically.</li>
 <li>Calculate <span class="math inline">\(E[X]\)</span>, <span class="math inline">\(E[Y]\)</span>, and the expected value of their
 product, <span class="math inline">\(E[XY]\)</span>.</li>
 </ol>
+<div id="solution-5" class="section level4">
+<h4>Solution</h4>
+<p>To compute the marginal probability distributions we can sum over
+rows (for <span class="math inline">\(X\)</span>) and columns (for <span class="math inline">\(Y\)</span>):</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right"></th>
+<th align="center"><span class="math inline">\(Y = 0\)</span></th>
+<th align="center"><span class="math inline">\(Y = 1\)</span></th>
+<th align="center"><span class="math inline">\(Y = 2\)</span></th>
+<th align="center">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><strong><span class="math inline">\(X =
+0\)</span></strong></td>
+<td align="center">0.12</td>
+<td align="center">0.18</td>
+<td align="center">0.10</td>
+<td align="center"><strong>0.40</strong></td>
+</tr>
+<tr class="even">
+<td align="right"><strong><span class="math inline">\(X =
+1\)</span></strong></td>
+<td align="center">0.18</td>
+<td align="center">0.27</td>
+<td align="center">0.15</td>
+<td align="center"><strong>0.60</strong></td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Total</strong></td>
+<td align="center"><strong>0.30</strong></td>
+<td align="center"><strong>0.45</strong></td>
+<td align="center"><strong>0.25</strong></td>
+<td align="center">1.00</td>
+</tr>
+</tbody>
+</table>
+<p>To verify that two variables are independent we must verify whether
+the following holds:</p>
+<p><span class="math display">\[P(X=x,Y=y)=P(X=x)P(Y=y).\]</span></p>
+<p>So, to verify this, we can leverage some linear algebra:</p>
+<pre class="r"><code>x &lt;- c(0.30, 0.45, 0.25)
+y &lt;- c(0.40, 0.60)
+xy &lt;- y %*% t(x)
+print(xy)</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] 0.12 0.18 0.10
+## [2,] 0.18 0.27 0.15</code></pre>
+<p>In the above, we have taken advantage of matrix multiplication,
+since:</p>
+<p><span class="math display">\[\left(\begin{array}{c}2 \\ 1 \\
+5\end{array}\right)(\begin{array}{ccc}4 &amp; 2
+\end{array})=\left(\begin{array}{cc}2\cdot 4 &amp; 2\cdot 2\\1\cdot 4
+&amp; 1\cdot 2\\ 5\cdot 4 &amp; 5\cdot
+2\end{array}\right)=\left(\begin{array}{cc}8 &amp; 4\\ 4 &amp; 2\\ 20
+&amp; 10\end{array}\right)\]</span> So, essentially, we multiply each
+row of the left matrix (column) with each column of the right matrix
+(row). Thus, we end up with all possible products.</p>
+<p>But, since we are not required to know anything about Linear Algebra,
+a more formal proof would be to just compute all pairwise products and
+cross check them with the original distribution table:</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right"></th>
+<th align="center"><span class="math inline">\(Y = 0\)</span></th>
+<th align="center"><span class="math inline">\(Y = 1\)</span></th>
+<th align="center"><span class="math inline">\(Y = 2\)</span></th>
+<th align="center">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><strong><span class="math inline">\(X =
+0\)</span></strong></td>
+<td align="center">0.40*0.30=0.12</td>
+<td align="center">0.40*0.45=0.18</td>
+<td align="center">0.40*0.25=0.10</td>
+<td align="center"><strong>0.40</strong></td>
+</tr>
+<tr class="even">
+<td align="right"><strong><span class="math inline">\(X =
+1\)</span></strong></td>
+<td align="center">0.60*0.30=0.18</td>
+<td align="center">0.60*0.45=0.27</td>
+<td align="center">0.60*0.25=0.15</td>
+<td align="center"><strong>0.60</strong></td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Total</strong></td>
+<td align="center"><strong>0.30</strong></td>
+<td align="center"><strong>0.45</strong></td>
+<td align="center"><strong>0.25</strong></td>
+<td align="center">1.00</td>
+</tr>
+</tbody>
+</table>
+<p>So, in any case, the two variables are independent!</p>
+<p>For the corresponding mean values:</p>
+<p><span class="math display">\[\begin{aligned}
+  E[X]&amp;=0\cdot0.40+1\cdot0.60=0.60\\
+  E[Y]&amp;=0\cdot0.30+1\cdot0.45+2\cdot0.25=0.95\\
+  E[XY]&amp;=\sum_{x,y}xyP(X=x,Y=y)=\\
+  &amp;=\sum_x\sum_yxyP(X=x)P(Y=y)=\\
+  &amp;=\sum_x xP(X=x)\sum_yyP(Y=y)=\\
+  &amp;=E[X]E[Y]=\\
+  &amp;=0.60\cdot0.95=\\
+  &amp;=0.57.
+\end{aligned}\]</span></p>
+<blockquote>
+<p><strong>Attention!</strong> The identity <span class="math inline">\(E[XY]=E[X]E[Y]\)</span> is true if <span class="math inline">\(X,Y\)</span> are pairwise independent!</p>
+</blockquote>
+</div>
 </div>
 <div id="problem-3" class="section level3">
 <h3>Problem 3</h3>
@@ -775,6 +923,23 @@ before stopping?</li>
 produced.</li>
 </ol></li>
 </ol>
+<div id="solution-6" class="section level4">
+<h4>Solution</h4>
+<p>Since we know the (constant) average call rate, letting <span class="math inline">\(X\)</span> be the number of calls over a 3-hour
+period will also follow a Poisson distribution with average rate of:</p>
+<p><span class="math display">\[\lambda&#39;=3\lambda=36.\]</span></p>
+<p>So, the expected number of calls will be:</p>
+<p><span class="math display">\[E[X]=\lambda&#39;=36.\]</span>
+Similarly:</p>
+<p><span class="math display">\[SD(X)=\sqrt{36}=6.\]</span></p>
+<p>Let now <span class="math inline">\(Y\)</span> be the number of
+produced parts until <span class="math inline">\(r=3\)</span> defective
+parts are produced. Then, <span class="math inline">\(Y\)</span> follows
+a negative binomial distribution with parameters <span class="math inline">\((r,p)=(3,0.05)\)</span>, so:</p>
+<p><span class="math display">\[E[Y]=\frac{r}{p}=\frac{3}{0.05}=60.\]</span>
+Similarly:</p>
+<p><span class="math display">\[SD(Y)=\frac{\sqrt{r(1-p)}}{p}=\frac{\sqrt{3\cdot0.95}}{0.05}\approx33.76.\]</span></p>
+</div>
 </div>
 </div>
 

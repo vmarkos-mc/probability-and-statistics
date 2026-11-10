@@ -3,8 +3,8 @@ title: "Exercise Sheet 02 - Discrete Random Variables"
 author: "Vassilis Markos"
 date: "2026-11-10"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 fontfamily: bera
 ---
 
@@ -218,6 +218,38 @@ b) Calculate the variance of their daily earnings, $Var(W)$.
 c) Find the standard deviation of their daily earnings, $SD(W)$.
 *Hint: Recall how constants affect mean and variance: $E[aX + b] = aE[X] + b$ and $Var(aX + b) = a^2Var(X)$.*
 
+#### Solution
+
+We can compute the mean value directly using the definition:
+
+$$\begin{aligned}
+  E[W]&=\sum_{w}wP(W=w)=\sum_{x=0}^\infty(40x+150)P(X=x)=\\
+  &=\sum_{x=0}^\infty 40xP(X=x)+\sum_{x=0}^\infty150P(X=x)=\\
+  &=40\sum_{x=0}^\infty xP(X=x)+150\sum_{x=0}^\infty P(X=x)=\\
+  &=40E[X]+150\cdot 1=\\
+  &=40\cdot6.5+150=\\
+  &=410
+\end{aligned}$$
+
+Or, we can just use the linearity of mean values:
+
+$$E[aX+b]=aE[X]+b.$$
+So, in our case:
+
+$$E[W]=E[40X+150]=40E[X]+150=410.$$
+Similarly, for the variance, we know that:
+
+$$\begin{aligned}
+  Var(aX)&=a^2Var(X)\\
+  Var(X+b)&=Var(X)
+\end{aligned}$$
+
+So, in our case:
+
+$$Var(W)=Var(40X+150)=40^2Var(X)=3600.$$
+For the standard deviation:
+
+$$SD(W)=\sqrt{Var(W)}=\sqrt{3600}=60.$$
 
 ### Problem 2
 
@@ -235,6 +267,61 @@ b) Are $X$ and $Y$ independent random variables? Prove your answer mathematicall
 c) Calculate $E[X]$, $E[Y]$, and the expected value of their product, $E[XY]$.
 
 
+#### Solution
+
+To compute the marginal probability distributions we can sum over rows (for $X$) and columns (for $Y$):
+
+| | $Y = 0$ | $Y = 1$ | $Y = 2$ | Total |
+|---:|:---:|:---:|:---:|:---:|
+| **$X = 0$** | 0.12 | 0.18 | 0.10 | **0.40** |
+| **$X = 1$** | 0.18 | 0.27 | 0.15 | **0.60** |
+| **Total**   | **0.30** | **0.45** | **0.25** | 1.00 |
+
+
+To verify that two variables are independent we must verify whether the following holds:
+
+$$P(X=x,Y=y)=P(X=x)P(Y=y).$$
+
+So, to verify this, we can leverage some linear algebra:
+
+```{r}
+x <- c(0.30, 0.45, 0.25)
+y <- c(0.40, 0.60)
+xy <- y %*% t(x)
+print(xy)
+```
+
+In the above, we have taken advantage of matrix multiplication, since:
+
+$$\left(\begin{array}{c}2 \\ 1 \\ 5\end{array}\right)(\begin{array}{ccc}4 & 2 \end{array})=\left(\begin{array}{cc}2\cdot 4 & 2\cdot 2\\1\cdot 4 & 1\cdot 2\\ 5\cdot 4 & 5\cdot 2\end{array}\right)=\left(\begin{array}{cc}8 & 4\\ 4 & 2\\ 20 & 10\end{array}\right)$$
+So, essentially, we multiply each row of the left matrix (column) with each column of the right matrix (row). Thus, we end up with all possible products.
+
+But, since we are not required to know anything about Linear Algebra, a more formal proof would be to just compute all pairwise products and cross check them with the original distribution table:
+
+
+| | $Y = 0$ | $Y = 1$ | $Y = 2$ | Total |
+|---:|:---:|:---:|:---:|:---:|
+| **$X = 0$** | 0.40\*0.30=0.12 | 0.40\*0.45=0.18 | 0.40\*0.25=0.10 | **0.40** |
+| **$X = 1$** | 0.60\*0.30=0.18 | 0.60\*0.45=0.27 | 0.60\*0.25=0.15 | **0.60** |
+| **Total**   | **0.30** | **0.45** | **0.25** | 1.00 |
+
+So, in any case, the two variables are independent!
+
+For the corresponding mean values:
+
+$$\begin{aligned}
+  E[X]&=0\cdot0.40+1\cdot0.60=0.60\\
+  E[Y]&=0\cdot0.30+1\cdot0.45+2\cdot0.25=0.95\\
+  E[XY]&=\sum_{x,y}xyP(X=x,Y=y)=\\
+  &=\sum_x\sum_yxyP(X=x)P(Y=y)=\\
+  &=\sum_x xP(X=x)\sum_yyP(Y=y)=\\
+  &=E[X]E[Y]=\\
+  &=0.60\cdot0.95=\\
+  &=0.57.
+\end{aligned}$$
+
+> **Attention!** The identity $E[XY]=E[X]E[Y]$ is true if $X,Y$ are pairwise independent!
+
 ### Problem 3
 
 Use the formulas from the reference table in Part 1 to solve the following applied problems:
@@ -245,3 +332,24 @@ Use the formulas from the reference table in Part 1 to solve the following appli
 2.  A factory production line creates mechanical parts, where each part has a $5\%$ chance ($p = 0.05$) of being defective. The supervisor runs the assembly line until they accumulate exactly $r = 3$ defective parts for quality testing.
     a) What is the expected total number of parts the line must produce before stopping?
     b) Calculate the standard deviation of the total number of parts produced.
+    
+    
+#### Solution
+
+Since we know the (constant) average call rate, letting $X$ be the number of calls over a 3-hour period will also follow a Poisson distribution with average rate of:
+
+$$\lambda'=3\lambda=36.$$
+
+So, the expected number of calls will be:
+
+$$E[X]=\lambda'=36.$$
+Similarly:
+
+$$SD(X)=\sqrt{36}=6.$$
+
+Let now $Y$ be the number of produced parts until $r=3$ defective parts are produced. Then, $Y$ follows a negative binomial distribution with parameters $(r,p)=(3,0.05)$, so:
+
+$$E[Y]=\frac{r}{p}=\frac{3}{0.05}=60.$$
+Similarly:
+
+$$SD(Y)=\frac{\sqrt{r(1-p)}}{p}=\frac{\sqrt{3\cdot0.95}}{0.05}\approx33.76.$$
