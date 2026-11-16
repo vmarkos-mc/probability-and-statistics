@@ -1,0 +1,95 @@
+% !TeX TS-program = xelatex
+\documentclass[aspectratio=169, 12pt, xcolor=table]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec-xetex}
+
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{subcaption}
+
+\setmainfont{Lato}
+
+%\PassOptionsToPackage[more=table]{xcolor}
+
+% Local configuration
+\renewcommand{\figurename}{}
+\DeclareCaptionFormat{custom}
+{%
+	\tiny #3
+}
+\captionsetup{format=custom}
+
+% Title stuff
+\title{Statistics}
+\subtitle{An Introduction using R}
+\date{Week 01}
+\author{Vassilis Markos, Mediterranean College}
+
+\usetheme{streamline}
+%\usepackage{/theme/beamerthemestreamline}
+
+% Local Commands
+\newcommand{\ohref}[1]{\href{#1}{\texttt{#1}}}
+\def\sms#1{\smsgo#1\relax}
+\def\smsgo#1.#2\relax{#1.{\scriptsize #2}}
+
+% Code listings
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\begin{frame}{Contents}
+		\tableofcontents
+	\end{frame}
+
+	\section{Descriptive Statistics}\label{sec:descriptive-statistics}
+	
+	\sectionframe
+	
+	\begin{frame}{Stopwatch!}
+		Open your mobile phone stopwatch application or just use:
+		\begin{center}
+			\url{https://www.online-stopwatch.com/}
+		\end{center}
+		Then:
+		\begin{itemize}
+			\item Start your stopwatch and try to press the "Stop!" (or "Pause") button at exactly \sms{3.000} seconds.
+			\item Repeat the above process 30 times, noting down the actual time shown when you stopped your stopwatch.
+		\end{itemize}
+		Okay, now, who's the best reflexes in this class?
+	\end{frame}
+	
+	
+	
+\end{document}
