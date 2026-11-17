@@ -1,0 +1,275 @@
+---
+title: "Exercise Sheet 03 - Continuous Random Variables"
+author: "Vassilis Markos"
+date: "2026-11-17"
+output:
+  pdf_document: default
+  html_document: default
+fontfamily: bera
+---
+
+## Quick Reference for Well-Known Distributions
+
+When working with common families of continuous random variables, probabilities are found by calculating areas under the probability density function $f(x)$ over an interval, rather than summing individual point probabilities (since $P(X = x) = 0$ for any single value $x$).
+
+| Distribution | Parameters | Probability Density Function $f(x)$ | $E[X]$ | $Var(X)$ | $SD(X)$ |
+|:----|:-------|:--------------|:---|:---|:---|
+| **Continuous Uniform** | $a$ (min), $b$ (max) | $\frac{1}{b-a}$, for $a \le x \le b$ | $\frac{a+b}{2}$ | $\frac{(b-a)^2}{12}$ | $\frac{b-a}{\sqrt{12}}$ |
+| **Normal** | $\mu$ (mean), $\sigma$ (SD) | $\frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}$, for $x \in (-\infty, \infty)$ | $\mu$ | $\sigma^2$ | $\sigma$ |
+| **Exponential** | $\lambda$ (rate $> 0$) | $\lambda e^{-\lambda x}$, for $x \ge 0$ | $\frac{1}{\lambda}$ | $\frac{1}{\lambda^2}$ | $\frac{1}{\lambda}$ |
+| **Gamma** | $\alpha$ (shape), $\lambda$ (rate) | $\frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}$, for $x \ge 0$ | $\frac{\alpha}{\lambda}$ | $\frac{\alpha}{\lambda^2}$ | $\frac{\sqrt{\alpha}}{\lambda}$ |
+
+*Note: For the Normal distribution, probabilities are typically evaluated by standardizing $X$ into a Standard Normal variable $Z = \frac{X - \mu}{\sigma} \sim N(0, 1)$ and using standard normal tables or software (e.g., `pnorm()` in R).*
+
+
+## Exercises
+
+### Exercise 1
+
+A continuous random variable $X$ has the following probability density function (PDF):
+
+$$f(x) = \begin{cases} c(4x - x^2), & \text{if } 0 \le x \le 4 \\ 0, & \text{otherwise} \end{cases}$$
+
+**Questions:**
+
+a) Find the value of the constant $c$ that makes $f(x)$ a valid probability density function. *(Hint: Recall that $\int_{-\infty}^{\infty} f(x)\,dx = 1$.)*
+b) Calculate the probability $P(1 \le X \le 3)$.
+c) Find the cumulative distribution function (CDF), $F(x) = P(X \le x)$, for $0 \le x \le 4$.
+d) Calculate the expected value $E[X]$.
+
+#### Solution
+
+Since $\int_{-\infty}^{+\infty}f(x)dx=1$, and $f(x)\neq0$ only on $[0,4]$, we should demand that:
+
+$$\int_0^4f(x)dx=1.$$
+
+Now, as for the integral, we can compute it as follows:
+
+$$\begin{aligned}
+  \int_0^4f(x)dx&=\int_0^4 c(4x-x^2)dx=\\
+  &=c\int_0^4 4x-x^2dx=&&\text{Due to integral's linearity}\\
+  &=c\int_0^4 (2x^2)'-\left(\frac{x^3}{3}\right)'dx=&&\text{Since $(x^2)'=2x$ and $(x^3)'=3x^2$}\\
+  &=c\left[2x^2-\frac{x^3}{3}\right]_0^4=&&\text{Integrals and derivatives cancel}\\
+  &=c\left(2\cdot4^2-\frac{4^3}{3}-\left(2\cdot0^2-\frac{0^3}{3}\right)\right)=\\
+  &=c\left(32-\frac{64}{3}\right)=\\
+  &=c\frac{32}{3}.
+\end{aligned}$$
+
+So, we want:
+
+$$c\frac{32}{3}=1\Rightarrow c=\frac{3}{32}.$$
+
+To compute the probability $P(1\leq X\leq 3)$ we have to compute;
+
+$$\begin{aligned}
+  P(1\leq X\leq 3)&=\int_1^3\frac{3}{32}(4x-x^2)dx=\\
+  &=\frac{3}{32}\int_1^34x-x^2dx=\\
+  &=\frac{3}{32}\left[2x^2-\frac{x^3}{3}\right]_1^3=\\
+  &=\frac{3}{32}\left(2\cdot3^2-\frac{3^3}{3}-\left(2\cdot1^2-\frac{1^3}{3}\right)\right)=\\
+  &=\frac{3}{32}\left(18-9-\frac{5}{3}\right)=\\
+  &=\frac{3}{32}\frac{22}{3}=\\
+  &=\frac{11}{16}.
+\end{aligned}$$
+
+To compute the CDF, similarly:
+
+$$\begin{aligned}
+  F(x)&=P(X\leq x)=\\
+  &=\int_{-\infty}^xf(t)dt=&&\text{We use $t$ since we have $x$ on the upper limit}\\
+  &=\int_0^x\frac{3}{32}(4t-t^2)dt=\\
+  &=\frac{3}{32}\int_0^x4t-t^2dt=\\
+  &=\frac{3}{32}\left[2t^2-\frac{t^3}{3}\right]_0^x=&&\text{Substituting for $0$ yields $0$, so we just omit it}\\
+  &=\frac{3}{32}\left(2x^2-\frac{x^3}{3}\right),\quad x\in[0,4].
+\end{aligned}$$
+
+If one want a non-factorised expression, we can move ahead a little bit:
+
+$$F(x)=\frac{3}{16}x^2-\frac{x^3}{32}.$$
+
+For the mean value we use the definition:
+
+$$\begin{aligned}
+  E[X]&=\int_{-\infty}^\infty xf(x)dx=\\
+  &=\int_0^4x\frac{3}{32}(4x-x^2)dx=&&\text{Common integration trick to distribute first}\\
+  &=\frac{3}{32}\int_0^44x^2-x^3dx=\\
+  &=\frac{3}{32}\int_0^4\left(4\frac{x^3}{3}\right)'-\left(\frac{x^4}{4}\right)'dx=\\
+  &=\frac{3}{32}\left[4\frac{x^3}{3}-\frac{x^4}{4}\right]_0^4=\\
+  &=\frac{3}{32}\left(4\frac{64}{3}-\frac{256}{4}\right)=\\
+  &=\frac{3}{32}\left(\frac{256}{3}-\frac{256}{4}\right)=&&\text{Avoid large multiplications$\ldots$}\\
+  &=\frac{3\cdot 256}{32\cdot 12}=&&\text{$\ldots$ as things might cancel out!}\\
+  &=\frac{8}{4}=\\
+  &=2.
+\end{aligned}$$
+
+
+### Exercise 2
+
+A municipal shuttle bus arrives at a transit stop strictly every 15 minutes. A commuter arrives at the stop at a completely random time without checking the schedule. Let $Y$ be the commuter's waiting time in minutes, modeled as a Continuous Uniform random variable on $[0, 15]$.
+
+**Questions:**
+
+a) Write down the probability density function $f(y)$ and sketch or describe its shape.
+b) What is the probability that the commuter waits more than 10 minutes?
+c) What is the probability that the commuter waits between 3 and 8 minutes?
+d) Calculate the expected waiting time $E[Y]$ and the standard deviation $SD(Y)$.
+
+
+#### Solution
+
+Using the Continuous Uniform Distribution formula:
+
+$$f(y)=\begin{cases}
+\frac{1}{15-0} & y\in[0,15]\\
+0 & \text{otherwise}
+\end{cases}=\begin{cases}
+\frac{1}{15} & y\in[0,15]\\
+0 & \text{otherwise}
+\end{cases}$$
+
+
+```{tikz, fig.ext='svg', echo=FALSE}
+% If running for first time, install through `install.packages("tinytex")`.
+\begin{tikzpicture}[xscale=0.33, yscale=30]
+  \draw[->] (-1,0) -- (18,0) node[pos=1, below]{$y$};
+  \draw[->] (0,{-1/30}) -- (0,{2/15}) node[pos=1, left]{$f(y)$};
+  \draw[red, thick] (-1,0) -- (0,0) node[pos=1, below, xshift=2]{$0$} -- (0,{1/15}) -- (15, {1/15})node[pos=0, left]{$\frac{1}{15}$} -- (15, 0) node[pos=1, below]{$15$} -- (18, 0);
+\end{tikzpicture}
+```
+
+To compute the probability we can either use the figure above or the integral:
+
+$$\begin{aligned}
+  P(Y>10)&=\int_{10}^{15}f(y)dy=\int_{10}^{15}\frac{1}{15}dy=\\
+  &=\frac{1}{15}\int_{10}^{15}1dy=\\
+  &=\frac{1}{15}[y]_{10}^{15}=\\
+  &=\frac{1}{15}(15-10)=\\
+  &=\frac{5}{15}=\\
+  &=\frac{1}{3}.
+\end{aligned}$$
+
+Using the plot above, we can compute the shaded area:
+
+```{tikz, fig.ext='svg', echo=FALSE}
+\begin{tikzpicture}[xscale=0.33, yscale=30]
+  \draw[->] (-1,0) -- (18,0) node[pos=1, below]{$y$};
+  \draw[->] (0,{-1/30}) -- (0,{2/15}) node[pos=1, left]{$f(y)$};
+  \draw[red, thick] (-1,0) -- (0,0) node[pos=1, below, xshift=2]{$0$} -- (0,{1/15}) -- (15, {1/15})node[pos=0, left]{$\frac{1}{15}$} -- (15, 0) node[pos=1, below]{$15$} -- (18, 0);
+  \draw[blue, dashed] (10, 0) -- (10,{1/15}) node[pos=0, below]{$10$};
+  \fill[blue, opacity=0.1] (10,0) rectangle (15,{1/15});
+  \node at (12.5,{1/30}) {$\scriptsize5\frac{1}{15}=\frac{5}{15}$};
+\end{tikzpicture}
+```
+
+Similarly, for waiting between 3 and 8 minutes:
+
+$$P(3\leq Y\leq 8)=\frac{5}{15}=\frac{1}{3}.$$
+
+For the mean value we can use the formula:
+
+$$E[Y]=\frac{0+15}{2}=7.5.$$
+Similarly, for the standard deviation:
+
+$$SD(Y)=\frac{15-0}{\sqrt{12}}=\frac{15}{\sqrt{12}}.$$
+
+
+### Exercise 3
+
+The time (in hours) between consecutive hardware failures in a large cloud data center follows an Exponential distribution with an average rate of $\lambda = 0.25$ failures per hour. Let $T$ represent the time until the next failure.
+
+**Questions:**
+
+a) What is the expected time between failures, $E[T]$, and its standard deviation, $SD(T)$?
+b) Find the probability that the system runs for at least 6 hours without a failure, $P(T \ge 6)$.
+c) Given that the data center has already operated for 4 hours without a failure, what is the probability that it survives at least another 6 hours? *(Hint: Use the memoryless property of the Exponential distribution: $P(T > s + t \mid T > s) = P(T > t)$.)*
+
+
+#### Solution
+
+Using the known formulas for an exponential distribution with $\lambda=0.25$:
+
+$$E[T]=SD(T)=\frac{1}{\lambda}=\frac{1}{0.25}=4.$$
+
+For the next probability we use the following integral:
+
+$$\begin{aligned}
+  P(T\geq 6)&=\int_6^{\infty}f(t)dt=\\
+  &=\int_6^{\infty}0.25e^{-0.25t}dt=\\
+  &=\int_6^{\infty}(-e^{-0.25t})'dt=&&\text{Since $(e^{at})'=ae^{at}$}\\
+  &=[-e^{-0.25t}]_6^\infty=&&\text{Even if you cannot compute the limit}\\
+  &=\lim_{t\to\infty}(-e^{-0.25t})-(-e^{-0.25\cdot6})&&\text{you know that this corresponds to a PDF, so}\\
+  &=0+e^{-1.5}&&\text{it should vanish at infinities.}\\
+  &\approx0.2231.
+\end{aligned}$$
+
+For the last one, as hinted, using the memoryless property of the exponential distribution:
+
+$$P(T>6+4|T>4)=P(T>6)\approx0.2231.$$
+
+
+### Exercise 4
+
+For each of the following scenarios, identify the appropriate continuous probability distribution from Part 1 (Continuous Uniform, Normal, Exponential, or Gamma) and use the formulas from the table to state the **mean** and **standard deviation**.
+
+1.  The systolic blood pressure of healthy adults in a population is symmetrically bell-shaped around an average of $120\text{ mmHg}$ with a variance of $144\text{ mmHg}^2$. Let $A$ be the blood pressure of a randomly selected adult.
+2.  A digital signal processor introduces round-off error that is equally likely to fall anywhere between $-0.5$ and $+0.5$ microvolts. Let $B$ be the round-off error of a single measurement.
+3.  Customer service calls arrive at a help desk at a rate of $\lambda = 2$ calls per minute. Let $C$ be the total waiting time until the $\alpha = 5\text{th}$ call arrives.
+
+
+## Problems
+
+### Problem 1
+
+The scores on a standardized quantitative aptitude exam follow a Normal distribution with mean $\mu = 500$ and standard deviation $\sigma = 80$. Let $X$ represent the score of a randomly chosen test-taker.
+
+**Questions:**
+
+a) Calculate the Z-score for a student who scored $620$, and find the probability that a randomly selected student scores higher than $620$.
+b) What proportion of students score between $460$ and $580$?
+c) The top $5\%$ of test-takers receive a merit scholarship. What is the minimum score required to qualify? *(Hint: Use the standard normal quantile $z_{0.95} \approx 1.645$.)*
+
+
+### Problem 2
+
+A chemical manufacturing plant produces liquid detergent in batches. The actual volume of detergent dispensed into a bottle, $X$, is a continuous random variable with mean $E[X] = 1005\text{ mL}$ and standard deviation $SD(X) = 4\text{ mL}$. 
+
+To convert the measurement into liters and subtract the tare weight equivalent of $0.005\text{ L}$, quality control defines a standardized net volume variable $W = 0.001X - 0.005$.
+
+**Questions:**
+
+a) Calculate the expected net volume in liters, $E[W]$.
+b) Calculate the variance $Var(W)$ and standard deviation $SD(W)$ of the net volume.
+c) Assuming $X$ is Normally distributed, what is the probability that a randomly inspected bottle contains less than $1000\text{ mL}$ ($W < 0.995\text{ L}$)?
+
+
+### Problem 3
+
+Use the formulas from the reference table in Part 1 to solve the following applied problems:
+
+1.  Requests arrive at an API gateway according to a Poisson process at an average rate of $\lambda = 6$ requests per second.
+    a) Let $T_1$ be the waiting time (in seconds) until the very first request arrives. Identify the distribution of $T_1$ and find its mean and standard deviation.
+    b) Let $T_{10}$ be the total waiting time (in seconds) until the $10\text{th}$ request arrives. Identify the distribution of $T_{10}$ and find its mean and standard deviation.
+2.  A automated packaging machine fills bags of coffee beans. The fill weight $X$ is Normally distributed with $\mu = 250\text{ g}$ and $\sigma = 3\text{ g}$.
+    a) If a quality inspector weighs $n = 1$ bag, what is the probability its weight is within $3\text{ g}$ of the mean?
+    b) Suppose the company wants to adjust the machine's precision (changing $\sigma$ while keeping $\mu = 250\text{ g}$) so that $99\%$ of all bags weigh between $244\text{ g}$ and $256\text{ g}$. What target standard deviation $\sigma$ must the machine achieve? *(Hint: $P(-2.576 \le Z \le 2.576) \approx 0.99$.)*
+
+
+### Standard Normal Distribution ($Z \sim N(0, 1)$) Reference Table
+
+The table below provides cumulative probabilities $\Phi(z) = P(Z \le z)$ for common standard normal quantiles used in this exercise sheet. By symmetry, $P(Z \le -z) = 1 - P(Z \le z)$.
+
+| $z$ | $P(Z \le z)$ | $P(Z > z)$ | $P(-z \le Z \le z)$ | Common Interpretation |
+|:---:|:---:|:---:|:----:|:---------------|
+| **0.00** | 0.5000 | 0.5000 | 0.0000 | Mean / Median |
+| **0.50** | 0.6915 | 0.3085 | 0.3830 | $0.5\sigma$ from mean |
+| **1.00** | 0.8413 | 0.1587 | 0.6827 | $1\sigma$ (Empirical Rule: ~68%) |
+| **1.25** | 0.8944 | 0.1056 | 0.7887 | $1.25\sigma$ from mean |
+| **1.28** | 0.9000 | 0.1000 | 0.8000 | 90th percentile (80% central interval) |
+| **1.50** | 0.9332 | 0.0668 | 0.8664 | $1.5\sigma$ from mean |
+| **1.645** | 0.9500 | 0.0500 | 0.9000 | 95th percentile (90% central interval) |
+| **1.96** | 0.9750 | 0.0250 | 0.9500 | 97.5th percentile (95% central interval) |
+| **2.00** | 0.9772 | 0.0228 | 0.9545 | $2\sigma$ (Empirical Rule: ~95%) |
+| **2.326** | 0.9900 | 0.0100 | 0.9800 | 99th percentile (98% central interval) |
+| **2.576** | 0.9950 | 0.0050 | 0.9900 | 99.5th percentile (99% central interval) |
+| **3.00** | 0.9987 | 0.0013 | 0.9973 | $3\sigma$ (Empirical Rule: ~99.7%) |
+
+

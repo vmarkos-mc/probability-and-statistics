@@ -1,0 +1,36 @@
+---
+title: "In Class Notes"
+author: "V. Markos"
+date: "2026-11-17"
+output: html_document
+---
+
+# A Few Notes on Integrals
+
+To begin with, the following is the simplest way to integrate:
+
+$$\int_a^bf'(x)dx=[f(x)]_a^b=f(b)-f(a).$$
+In most cases in this module, integrals will be either of this form or some other
+known integrals.
+
+Also, a table of common antiderivatives is shared below for your convenience:
+
+| $f(x)$ | Antiderivative of $f(x)$ |
+|:---|:---|
+| $1$ | $x$ |
+| $x$ | $\dfrac{x^2}{2}$ |
+| $x^2$ | $\dfrac{x^3}{3}$ |
+| $x^n$ | $\dfrac{x^{n+1}}{n+1}$ |
+| $e^x$ | $e^x$ |
+| $\sin x$ | $-\cos x$ |
+| $\cos x$ | $\sin x$ |
+| $\dfrac{1}{x}$ | $\ln x$ |
+
+Also, a nice property of integrals is linearity, i.e., that:
+
+$$\begin{aligned}
+  \int_a^b cf(x)dx&=c\int_a^bf(x)dx.\\
+  \int_a^b f(x)+g(x)x&=\int_a^bf(x)dx+\int_a^bg(x)dx.
+\end{aligned}$$
+
+
