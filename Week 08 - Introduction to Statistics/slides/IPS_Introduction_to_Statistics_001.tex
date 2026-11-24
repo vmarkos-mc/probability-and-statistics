@@ -9,6 +9,8 @@
 \usepackage{listings}
 \usepackage{subcaption}
 
+\usepackage{siunitx-v2}
+
 \setmainfont{Lato}
 
 %\PassOptionsToPackage[more=table]{xcolor}
@@ -34,6 +36,8 @@
 \newcommand{\ohref}[1]{\href{#1}{\texttt{#1}}}
 \def\sms#1{\smsgo#1\relax}
 \def\smsgo#1.#2\relax{#1.{\scriptsize #2}}
+
+\newcommand{\abs}[1]{{\left|{#1}\right|}}
 
 % Code listings
 
@@ -150,8 +154,113 @@
 		\begin{itemize}
 			\item A good idea to measure the dispersion of a sample would be to get the average value of the distances from the mean.\pause
 			\item So, something like that?
-			\[\]
+			\[\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x}).\]\pause
+			\item What's the value of the above on the following sample?
+			\[-2026, -1000, 0, 1000, 2026?\]
 		\end{itemize}
 	\end{frame}
+
+	\begin{frame}{A Better Measure of Dispersion}
+		\begin{itemize}
+			\item The above is not a convenient enough measure of dispersion, given that signs might come in and cancel out, decreasing our estimation of sample dispersion.
+			\item Any remedies?\pause
+			\item Approach 1: Take absolute values:
+			\[\frac{1}{n}\sum_{i=1}^n\abs{x_i-\overline{x}}.\]\pause
+			\item This is a good measure of dispersion, just not always differentiable\ldots
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{An Even Better Measure of Dispersion}
+		\begin{itemize}
+			\item Approach 2: Take squares:
+			\[\hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2.\]\pause
+			\item This is differentiable and also captures all subtleties we would be interested in.
+			\item It is called (population) \textbf{variance.}\pause
+			\item Any issues with that?
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Standard Deviation}
+		\begin{itemize}
+			\item If $x_i$ is measured in some unit, $u$, then in what units is $\hat{\sigma}^2$ measured?\pause
+			\item $u^2$!\pause
+			\item So, in case, e.g, we have sampled some student heights in $\si{\metre}$, then $\hat{\sigma}^2$ will be measured in $\si{\metre^2}$, which makes little sense.
+			\item So, how to remedy this as well?\pause
+			\item Just take square roots to correct units:
+			\[\hat{\sigma}=\sqrt{\sigma^2}=\sqrt{\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2}.\]
+		\end{itemize}
+	\end{frame}
+
+
+	\section{A Probabilistic Interlude}
+
+	\sectionframe
+
+	\begin{frame}{Sample Variance}
+		\begin{itemize}
+			\item $x_i$ are observations drawn from some unknown random variable, $X$.
+			\item Hence, we would like our sample estimations of the mean and variance to be ``good'' estimators.
+			\item This, in statistics, is often captured by the concepts of an \textbf{unbiased estimator}, i.e., an estimator $\hat{T}$ of a statistical function $T$, such that:
+			\[E[\hat{T}]=T.\]
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Sample Mean}
+		\begin{itemize}
+			\item Prove that the sample mean:
+			\[\overline{x}=\frac{1}{n}\sum_{i=1}^nx_i,\]
+			is an unbiased estimator of the population mean value, $\mu$.
+			\item Did you make any assumptions in the process?
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Sample Variance}
+		\begin{itemize}
+			\item Can you now show that $\hat{\sigma}^2$:
+			\[\hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2\]
+			is an unbiased estimator of the underlying population's variance, $\sigma^2$?\pause
+			\item Well, if you tried, you must have seen that things did not work out well. Why was that?\pause
+			\item Find an unbiased estimator of $\sigma^2$!
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Sample Variance}
+		\begin{itemize}
+			\item After a little experimentation, you might end up with:
+			\[s^2=\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline{x})^2.\]
+			\item This is what we refer to as \textbf{sample variance}.
+			\item Dividing by $n-1$ essentially takes into account the fact that we are also estimating the mean value, $\overline{x}$, which is also unknown to us.
+		\end{itemize}
+	\end{frame}
+
+	\begin{headsup}{Sample Standard Deviation}
+		\begin{itemize}
+			\item Since $s^2$ is an unbiased estimator of $\sigma^2$, then what would be a reasonable estimator of $\sigma$?\pause
+			\item Well:
+			\[s=\sqrt{s^2}=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline{x})^2}.\]\pause
+			\item Is this true?\pause
+			\item In general, no, due to Jensen's inequality, but, we shall use this for now, as there is no one-size-fits-all formula for that.
+		\end{itemize}
+	\end{headsup}
+
+
+	\section{Exercises}
+	
+	\sectionframe
+	
+	
+	\begin{frame}[fragile]{How Much is Off?}
+		Using R, create normally distributed random samples of $N$ observations for various values of $N=5,10,15,\ldots,50$. You can do so through, e.g.:
+		\begin{lstlisting}[language=R]
+smpl <- rnorm(N, mean = 0.7, sd = 1.4)
+\end{lstlisting}
+		Choose values for \texttt{mean} and \texttt{sd} at random each time, for each value of $N$.
+		\begin{enumerate}
+			\item Compute $\hat{\sigma}^2$ and $s^2$ for each generated sample.
+			\item Collect the above in a data frame
+			\item Make relevant plots, in particular showing the difference between $\sigma^2$, $\hat{\sigma}^2$ and $s^2$.
+		\end{enumerate}
+	\end{frame}
+
 	
 \end{document}

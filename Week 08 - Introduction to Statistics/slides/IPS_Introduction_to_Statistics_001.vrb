@@ -1,0 +1,11 @@
+\frametitle{How Much is Off?}
+Using R, create normally distributed random samples of $N$ observations for various values of $N=5,10,15,\ldots,50$. You can do so through, e.g.:
+^^I^^I\begin{lstlisting}[language=R]
+smpl <- rnorm(N, mean = 0.7, sd = 1.4)
+\end{lstlisting}
+^^I^^IChoose values for \texttt{mean} and \texttt{sd} at random each time, for each value of $N$.
+^^I^^I\begin{enumerate}
+^^I^^I^^I\item Compute $\hat{\sigma}^2$ and $s^2$ for each generated sample.
+^^I^^I^^I\item Collect the above in a data frame
+^^I^^I^^I\item Make relevant plots, in particular showing the difference between $\sigma^2$, $\hat{\sigma}^2$ and $s^2$.
+^^I^^I\end{enumerate}
