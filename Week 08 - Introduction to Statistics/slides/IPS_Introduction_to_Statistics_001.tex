@@ -90,6 +90,68 @@
 		Okay, now, who's the best reflexes in this class?
 	\end{frame}
 	
+	\begin{frame}{What to Measure?}
+		\begin{itemize}
+			\item Who has the best average reaction time? \textit{You can use R's \texttt{mean} function.}\pause
+			\item Is there any problem with using the above measure?\pause
+			\item To begin with, should we even measure times themselves?\pause
+			\begin{itemize}
+				\item Maybe measure absolute distance from the target value? Thus, opposite errors do not cancel out.\pause
+			\end{itemize}
+			\item Next, how reliable is mean value as an indicative measure for a particular sample?
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Okay, any other ideas?}
+		\begin{itemize}
+			\item A mean value cannot always represent a sample since, both samples below share the same mean value:
+			\begin{align*}
+				&5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5\\
+				&-2026, -1000, -500, -200, 5, 200, 500, 1000, 2026
+			\end{align*}
+			\item So, one more piece of information might be a sample's range, $R$:
+			\[R=\max x_i-\min x_i.\]
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{More on Mean Values}
+		\begin{itemize}
+			\item Mean values are, in general, sensitive to extreme observations, i.e., you can manipulate a mean value by adding an extreme enough value.\pause
+			\item This is evident from its very definition:
+			\[\overline{x}=\frac{1}{n}\sum_{i=1}^nx_i=\frac{x_1+\cdots+x_n}{n}.\]\pause
+			\item Changing, e.g., $x_n$ with $3000x_n$ magnifies the effect of $x_n$ on $\overline{x}$.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{The Median}
+		\begin{itemize}
+			\item We can think of a number, $\delta$, which splits the sample into two equal parts:
+			\begin{itemize}
+				\item Part A contains those observations that are at most equal to $\delta$.
+				\item Part B contains those observation that are larger than $\delta$.
+			\end{itemize}
+			\item So, essentially, sort all observations and look exactly at the middle of this sorted sample.
+			\item If the number of observations is odd, then there is exactly one such observation.
+			\item If the number of observations is even, then there are two "middle" observations, so we compute their mean value.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{The Median: An Example}
+		\begin{itemize}
+			\item Consider the following (sorted) sample:
+			\[-2, 0, 3, \textcolor{streamlinegreen}{3}, 5, 7, 2027.\]\pause
+			\item Consider now the following sample:
+			\[-2027, 10, 20, \textcolor{streamlineorange}{\underbrace{30, 40}_{\frac{30+40}{2}=35}}, 70, 70, 80.\]\pause
+			\item Observe how change the colourless observations does not affect the sample median at all!
+		\end{itemize}
+	\end{frame}
 	
+	\begin{frame}{A More Fine Grained Measure of Dispersion}
+		\begin{itemize}
+			\item A good idea to measure the dispersion of a sample would be to get the average value of the distances from the mean.\pause
+			\item So, something like that?
+			\[\]
+		\end{itemize}
+	\end{frame}
 	
 \end{document}
