@@ -249,7 +249,7 @@
 	\sectionframe
 	
 	
-	\begin{frame}[fragile]{How Much is Off?}
+	\begin{frame}[fragile]{How Much are Variance Estimators Off?}
 		Using R, create normally distributed random samples of $N$ observations for various values of $N=5,10,15,\ldots,50$. You can do so through, e.g.:
 		\begin{lstlisting}[language=R]
 smpl <- rnorm(N, mean = 0.7, sd = 1.4)
@@ -260,6 +260,30 @@ smpl <- rnorm(N, mean = 0.7, sd = 1.4)
 			\item Collect the above in a data frame
 			\item Make relevant plots, in particular showing the difference between $\sigma^2$, $\hat{\sigma}^2$ and $s^2$.
 		\end{enumerate}
+	\end{frame}
+
+	\begin{frame}{Linearity of Common Measures}
+		Let $x_i$, $i=1,\ldots,n$ be some observations and let:
+		\[y_i=ax_i+b,\quad i=1,\ldots,n\]
+		for some $a,b\in\mathbb{R}$.
+		\begin{enumerate}
+			\item Prove that:
+			\[\overline{y}=a\overline{x}+b.\]
+			\item Does the same hold for $s_y$? That is, is it true that:
+			\[s_y=as_x+b?\]
+			If not, what is true, instead?
+		\end{enumerate}
+	\end{frame}
+
+	\begin{frame}{Computing $s^2$}
+		When computing $\hat{\sigma}$ or $s$ using their definitions, we need to first compute the sample mean, $\overline{x}$. However, this means parsing our data twice, which might be computationally inefficient. So, prove that the following also holds:
+		\[s^2=\frac{1}{n-1}\left(\sum_{i=1}^nx_i^2-\frac{1}{n}\left(\sum_{i=1}^nx_i\right)^2\right)\]
+	\end{frame}
+
+	\begin{frame}{Jensen's Inequality}
+		Let $f$ be a differentiable concave function, i.e., $f'(x)\leq0$. Let, also, $x_i$, $i=1,2,\ldots,n$ be a random sample. Then, prove that:
+		\[f(\overline{x})\geq\overline{f(x)},\]
+		where $f(x_i)$ are the observations transformed by $f$. Then, use the above to explain how the formula for $s$ is not an unbiased estimator for population variance.
 	\end{frame}
 
 	

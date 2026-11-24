@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022/Debian) (preloaded format=xelatex 2025.2.22)  24 NOV 2026 09:13
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022/Debian) (preloaded format=xelatex 2025.2.22)  24 NOV 2026 14:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1262,6 +1262,13 @@ File: lstlang2.sty 2020/03/24 1.8d listings language file
 File: lstlang3.sty 2020/03/24 1.8d listings language file
 )) [43
 
+] [44
+
+]
+[45
+
+] [46
+
 ]
 \tf@nav=\write6
 \openout6 = `IPS_Introduction_to_Statistics_001.nav'.
@@ -1272,19 +1279,18 @@ File: lstlang3.sty 2020/03/24 1.8d listings language file
 \tf@snm=\write8
 \openout8 = `IPS_Introduction_to_Statistics_001.snm'.
 
-
-(./IPS_Introduction_to_Statistics_001.aux)
+ (./IPS_Introduction_to_Statistics_001.aux)
 Package rerunfilecheck Info: File `IPS_Introduction_to_Statistics_001.out' has 
 not changed.
 (rerunfilecheck)             Checksum: D0EE41F00A7F4A74AAD0FF5ED066EE27;418.
  ) 
 Here is how much of TeX's memory you used:
- 32952 strings out of 476775
- 712409 string characters out of 5808212
+ 32970 strings out of 476775
+ 712688 string characters out of 5808212
  1864991 words of memory out of 5000000
- 52478 multiletter control sequences out of 15000+600000
- 522310 words of font info for 100 fonts, out of 8000000 for 9000
+ 52492 multiletter control sequences out of 15000+600000
+ 523872 words of font info for 108 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  128i,16n,122p,905b,1813s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on IPS_Introduction_to_Statistics_001.pdf (43 pages).
+Output written on IPS_Introduction_to_Statistics_001.pdf (46 pages).
