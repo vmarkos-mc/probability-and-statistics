@@ -1,0 +1,97 @@
+---
+title: "In class notes"
+author: "V. Markos"
+date: "2026-11-24"
+output: html_document
+---
+
+# Loading Your Data
+
+Having measured our reflexes, we now have to load those data into this script:
+
+```{r}
+# In this case, floats have been written using comma (,). Thus, we 
+# inform read.csv() that we want something else as a column separator
+# (anything would work in this case, besides comma).
+data <- read.csv('reflexes.csv', sep = ' ')
+# head() returns the first six rows of the data frame
+head(data)
+```
+
+Now, to compute the mean value of times, we can just first make our times a vector:
+
+```{r}
+times <- data$X2.984
+mean(times)
+```
+
+This does not run saying that our data are not numeric?
+
+To check the type of our loaded data, we can use this:
+
+```{r}
+str(data)
+```
+
+Indeed, R has treated everything as characters! To resolve this:
+
+```{r}
+times <- as.numeric(data$X2.984)
+mean(times)
+```
+
+Now, everything is NA! This is due to us using commas instead of dots, so we have to first fix all this:
+
+```{r}
+times <- sub(',', '.', data$X2.984)
+str(times)
+```
+
+Now, we can parse them as floats:
+
+```{r}
+times <- as.numeric(times)
+mean(times)
+```
+
+But, is the mean value good enough? Let us plots a histogram to see the underlying distribution:
+
+```{r}
+hist(times)
+```
+
+Ideally, we should take into account extremes values that cancel, so we can measure distance from 3 instead of just reaction time:
+
+```{r}
+dist <- abs(times - 3)
+mean(dist)
+```
+
+Also, the corresponding histogram:
+
+```{r}
+hist(dist)
+```
+
+But, means might deceive you, especially in the presence of extreme values, so we also compute the median:
+
+```{r}
+median(dist)
+```
+
+We might also consider the sample's range:
+
+```{r}
+dist_range <- range(dist)
+dist_range
+dist_range_R <- dist_range[2] - dist_range[1]
+print(dist_range_R)
+```
+
+Also, to compute our standard deviation:
+
+```{r}
+var(dist)
+sd(dist)
+```
+
